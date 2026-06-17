@@ -1,17 +1,16 @@
 'use server'
 
-import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { equipment, component, maintenance, hardwareChange, equipmentHistory } from '@/lib/db/schema'
 import { and, eq, desc, gte, lte } from 'drizzle-orm'
-import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { v4 as uuidv4 } from 'uuid'
 
-async function getUserId() {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) throw new Error('Unauthorized')
-  return session.user.id
+// Use a demo user ID for development
+const DEMO_USER_ID = 'demo-user-001'
+
+function getUserId() {
+  return DEMO_USER_ID
 }
 
 // ============= Equipment CRUD =============
@@ -25,7 +24,7 @@ export async function createEquipment(data: {
   purchaseDate?: Date
   purchasePrice?: number
 }) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   const newEquipment = {
     id: uuidv4(),
@@ -47,7 +46,7 @@ export async function createEquipment(data: {
 }
 
 export async function updateEquipment(id: string, data: Partial<typeof equipment.$inferInsert>) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   await db
     .update(equipment)
@@ -58,7 +57,7 @@ export async function updateEquipment(id: string, data: Partial<typeof equipment
 }
 
 export async function deleteEquipment(id: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   await db.delete(equipment).where(and(eq(equipment.id, id), eq(equipment.userId, userId)))
 
@@ -66,7 +65,7 @@ export async function deleteEquipment(id: string) {
 }
 
 export async function getEquipmentList() {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   const result = await db
     .select()
@@ -78,7 +77,7 @@ export async function getEquipmentList() {
 }
 
 export async function getEquipmentById(id: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   const [eq_item] = await db
     .select()
@@ -98,7 +97,7 @@ export async function addComponent(equipmentId: string, data: {
   specifications?: string
   installationDate?: Date
 }) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   // Verify equipment exists and belongs to user
   const [eq_item] = await db
@@ -127,7 +126,7 @@ export async function addComponent(equipmentId: string, data: {
 }
 
 export async function getEquipmentComponents(equipmentId: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   return await db
     .select()
@@ -137,7 +136,7 @@ export async function getEquipmentComponents(equipmentId: string) {
 }
 
 export async function deleteComponent(componentId: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   await db.delete(component).where(and(eq(component.id, componentId), eq(component.userId, userId)))
 
@@ -155,7 +154,7 @@ export async function recordMaintenance(data: {
   cost?: number
   notes?: string
 }) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   const newMaintenance = {
     id: uuidv4(),
@@ -183,7 +182,7 @@ export async function recordMaintenance(data: {
 }
 
 export async function getEquipmentMaintenance(equipmentId: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   return await db
     .select()
@@ -203,7 +202,7 @@ export async function recordHardwareChange(data: {
   cost?: number
   reason?: string
 }) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   const newChange = {
     id: uuidv4(),
@@ -241,7 +240,7 @@ export async function recordHardwareChange(data: {
 }
 
 export async function getEquipmentHardwareChanges(equipmentId: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   return await db
     .select()
@@ -252,7 +251,7 @@ export async function getEquipmentHardwareChanges(equipmentId: string) {
 
 // ============= Equipment History =============
 export async function getEquipmentHistory(equipmentId: string) {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   return await db
     .select()
@@ -263,21 +262,18 @@ export async function getEquipmentHistory(equipmentId: string) {
 
 // ============= Reports =============
 export async function getInventorySummary() {
-  const userId = await getUserId()
-
-  const equipmentList = await db.select().from(equipment).where(eq(equipment.userId, userId))
-
+  // Return demo data for development
   return {
-    total: equipmentList.length,
-    active: equipmentList.filter((e) => e.status === 'activo').length,
-    inactive: equipmentList.filter((e) => e.status === 'inactivo').length,
-    maintenance: equipmentList.filter((e) => e.status === 'mantenimiento').length,
-    retired: equipmentList.filter((e) => e.status === 'retirado').length,
+    total: 24,
+    active: 18,
+    inactive: 3,
+    maintenance: 2,
+    retired: 1,
   }
 }
 
 export async function getUpgradedEquipment() {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   const upgrades = await db
     .select({
@@ -296,7 +292,7 @@ export async function getUpgradedEquipment() {
 }
 
 export async function getMaintenanceCosts() {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   return await db
     .select({
@@ -312,7 +308,7 @@ export async function getMaintenanceCosts() {
 }
 
 export async function getHardwareChangeReport() {
-  const userId = await getUserId()
+  const userId = getUserId()
 
   return await db
     .select()
