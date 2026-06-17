@@ -1,9 +1,8 @@
-import { auth } from '@/lib/auth'
+import { getSession } from '@/lib/static-auth'
 import { redirect } from 'next/navigation'
-import { headers } from 'next/headers'
 
 export default async function Page() {
-  const session = await auth.api.getSession({ headers: await headers() })
+  const session = await getSession()
 
   if (session?.user) {
     redirect('/dashboard')

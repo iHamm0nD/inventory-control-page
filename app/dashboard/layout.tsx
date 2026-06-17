@@ -1,7 +1,6 @@
 import { DashboardNav } from '@/components/dashboard-nav'
-import { auth } from '@/lib/auth'
+import { getSession } from '@/lib/static-auth'
 import { redirect } from 'next/navigation'
-import { headers } from 'next/headers'
 
 export const metadata = {
   title: 'Dashboard - Control de Inventario',
@@ -13,7 +12,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await auth.api.getSession({ headers: await headers() })
+  const session = await getSession()
 
   if (!session?.user) {
     redirect('/sign-in')
