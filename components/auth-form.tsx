@@ -23,6 +23,7 @@ export function AuthForm() {
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ username, password }),
       })
 
@@ -35,7 +36,6 @@ export function AuthForm() {
       }
 
       router.push('/')
-      router.refresh()
     } catch (err) {
       setError('Error al procesar la solicitud')
       setLoading(false)
