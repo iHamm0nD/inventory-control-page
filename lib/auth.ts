@@ -20,6 +20,8 @@ export const auth = betterAuth({
     ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
       : []),
+    'https://vm-inventory-control-page.vusercontent.net',
+    'https://*.vusercontent.net',
   ],
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7 days
