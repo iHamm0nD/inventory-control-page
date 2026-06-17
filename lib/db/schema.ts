@@ -27,12 +27,11 @@ export const account = pgTable('account', {
   userId: text('userId')
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' }),
-  accountId: text('accountId').notNull(),
+  type: text('type').notNull(),
   provider: text('provider').notNull(),
   providerAccountId: text('providerAccountId').notNull(),
   refreshToken: text('refreshToken'),
   accessToken: text('accessToken'),
-  idToken: text('idToken'),
   expiresAt: bigint('expiresAt', { mode: 'number' }),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
