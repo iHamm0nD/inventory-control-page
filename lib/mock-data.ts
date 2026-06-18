@@ -1,62 +1,62 @@
 // Datos simulados para laboratorio de 50 computadoras
 export const mockEquipment = [
-  // Workstations activas (35 PCs)
-  { id: '1', name: 'PC-LAB-001', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090001', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '2', name: 'PC-LAB-002', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090002', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '3', name: 'PC-LAB-003', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090003', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '4', name: 'PC-LAB-004', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090004', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '5', name: 'PC-LAB-005', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090005', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '6', name: 'PC-LAB-006', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090006', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '7', name: 'PC-LAB-007', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090007', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '8', name: 'PC-LAB-008', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090008', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '9', name: 'PC-LAB-009', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090009', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '10', name: 'PC-LAB-010', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090010', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200 },
-  { id: '11', name: 'PC-LAB-011', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800011', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '12', name: 'PC-LAB-012', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800012', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '13', name: 'PC-LAB-013', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800013', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '14', name: 'PC-LAB-014', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800014', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '15', name: 'PC-LAB-015', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800015', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '16', name: 'PC-LAB-016', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800016', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '17', name: 'PC-LAB-017', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800017', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '18', name: 'PC-LAB-018', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800018', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '19', name: 'PC-LAB-019', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800019', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '20', name: 'PC-LAB-020', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800020', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350 },
-  { id: '21', name: 'PC-LAB-021', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90021', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '22', name: 'PC-LAB-022', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90022', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '23', name: 'PC-LAB-023', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90023', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '24', name: 'PC-LAB-024', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90024', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '25', name: 'PC-LAB-025', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90025', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '26', name: 'PC-LAB-026', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90026', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '27', name: 'PC-LAB-027', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90027', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '28', name: 'PC-LAB-028', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90028', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '29', name: 'PC-LAB-029', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90029', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '30', name: 'PC-LAB-030', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90030', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100 },
-  { id: '31', name: 'PC-LAB-031', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS31', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 950 },
-  { id: '32', name: 'PC-LAB-032', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS32', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 950 },
-  { id: '33', name: 'PC-LAB-033', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS33', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 950 },
-  { id: '34', name: 'PC-LAB-034', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS34', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 950 },
-  { id: '35', name: 'PC-LAB-035', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS35', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 950 },
+  // Workstations activas (35 PCs) - Precios en Soles Peruanos
+  { id: '1', name: 'PC-LAB-001', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090001', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '2', name: 'PC-LAB-002', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090002', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '3', name: 'PC-LAB-003', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090003', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '4', name: 'PC-LAB-004', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090004', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '5', name: 'PC-LAB-005', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090005', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '6', name: 'PC-LAB-006', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090006', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '7', name: 'PC-LAB-007', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090007', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '8', name: 'PC-LAB-008', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090008', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '9', name: 'PC-LAB-009', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090009', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '10', name: 'PC-LAB-010', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090010', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440 },
+  { id: '11', name: 'PC-LAB-011', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800011', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '12', name: 'PC-LAB-012', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800012', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '13', name: 'PC-LAB-013', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800013', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '14', name: 'PC-LAB-014', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800014', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '15', name: 'PC-LAB-015', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800015', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '16', name: 'PC-LAB-016', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800016', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '17', name: 'PC-LAB-017', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800017', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '18', name: 'PC-LAB-018', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800018', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '19', name: 'PC-LAB-019', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800019', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '20', name: 'PC-LAB-020', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800020', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995 },
+  { id: '21', name: 'PC-LAB-021', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90021', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '22', name: 'PC-LAB-022', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90022', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '23', name: 'PC-LAB-023', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90023', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '24', name: 'PC-LAB-024', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90024', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '25', name: 'PC-LAB-025', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90025', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '26', name: 'PC-LAB-026', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90026', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '27', name: 'PC-LAB-027', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90027', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '28', name: 'PC-LAB-028', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90028', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '29', name: 'PC-LAB-029', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90029', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '30', name: 'PC-LAB-030', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90030', status: 'activo', location: 'Aula C2', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070 },
+  { id: '31', name: 'PC-LAB-031', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS31', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 3515 },
+  { id: '32', name: 'PC-LAB-032', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS32', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 3515 },
+  { id: '33', name: 'PC-LAB-033', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS33', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 3515 },
+  { id: '34', name: 'PC-LAB-034', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS34', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 3515 },
+  { id: '35', name: 'PC-LAB-035', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS35', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2023-08-05'), purchasePrice: 3515 },
 
   // Inactivas/Standby (8 PCs)
-  { id: '36', name: 'PC-LAB-036', type: 'Estación de Trabajo', model: 'Dell OptiPlex 5090', serialNumber: 'DL5090036', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-05-12'), purchasePrice: 950 },
-  { id: '37', name: 'PC-LAB-037', type: 'Estación de Trabajo', model: 'Dell OptiPlex 5090', serialNumber: 'DL5090037', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-05-12'), purchasePrice: 950 },
-  { id: '38', name: 'PC-LAB-038', type: 'Estación de Trabajo', model: 'HP ProDesk 400', serialNumber: 'HP400038', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-11-08'), purchasePrice: 850 },
-  { id: '39', name: 'PC-LAB-039', type: 'Estación de Trabajo', model: 'HP ProDesk 400', serialNumber: 'HP400039', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-11-08'), purchasePrice: 850 },
-  { id: '40', name: 'PC-LAB-040', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M70', serialNumber: 'LEN70040', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2020-09-03'), purchasePrice: 900 },
-  { id: '41', name: 'PC-LAB-041', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M70', serialNumber: 'LEN70041', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2020-09-03'), purchasePrice: 900 },
-  { id: '42', name: 'PC-LAB-042', type: 'Servidor', model: 'Dell PowerEdge R640', serialNumber: 'DLPE640042', status: 'inactivo', location: 'Sala de Servidores', purchaseDate: new Date('2020-02-15'), purchasePrice: 4500 },
-  { id: '43', name: 'PC-LAB-043', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS43', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2022-12-10'), purchasePrice: 950 },
+  { id: '36', name: 'PC-LAB-036', type: 'Estación de Trabajo', model: 'Dell OptiPlex 5090', serialNumber: 'DL5090036', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-05-12'), purchasePrice: 3515 },
+  { id: '37', name: 'PC-LAB-037', type: 'Estación de Trabajo', model: 'Dell OptiPlex 5090', serialNumber: 'DL5090037', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-05-12'), purchasePrice: 3515 },
+  { id: '38', name: 'PC-LAB-038', type: 'Estación de Trabajo', model: 'HP ProDesk 400', serialNumber: 'HP400038', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-11-08'), purchasePrice: 3145 },
+  { id: '39', name: 'PC-LAB-039', type: 'Estación de Trabajo', model: 'HP ProDesk 400', serialNumber: 'HP400039', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-11-08'), purchasePrice: 3145 },
+  { id: '40', name: 'PC-LAB-040', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M70', serialNumber: 'LEN70040', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2020-09-03'), purchasePrice: 3330 },
+  { id: '41', name: 'PC-LAB-041', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M70', serialNumber: 'LEN70041', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2020-09-03'), purchasePrice: 3330 },
+  { id: '42', name: 'PC-LAB-042', type: 'Servidor', model: 'Dell PowerEdge R640', serialNumber: 'DLPE640042', status: 'inactivo', location: 'Sala de Servidores', purchaseDate: new Date('2020-02-15'), purchasePrice: 16650 },
+  { id: '43', name: 'PC-LAB-043', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS43', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2022-12-10'), purchasePrice: 3515 },
 
   // En mantenimiento (4 PCs)
-  { id: '44', name: 'PC-LAB-044', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090044', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2022-01-15'), purchasePrice: 1200, maintenanceReason: 'Cambio de disco duro' },
-  { id: '45', name: 'PC-LAB-045', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800045', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2022-06-10'), purchasePrice: 1350, maintenanceReason: 'Actualización de RAM' },
-  { id: '46', name: 'PC-LAB-046', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90046', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2023-03-20'), purchasePrice: 1100, maintenanceReason: 'Limpieza y servicio preventivo' },
-  { id: '47', name: 'PC-LAB-047', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS47', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2023-08-05'), purchasePrice: 950, maintenanceReason: 'Reparación de placa base' },
+  { id: '44', name: 'PC-LAB-044', type: 'Estación de Trabajo', model: 'Dell OptiPlex 7090', serialNumber: 'DL7090044', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2022-01-15'), purchasePrice: 4440, maintenanceReason: 'Cambio de disco duro' },
+  { id: '45', name: 'PC-LAB-045', type: 'Estación de Trabajo', model: 'HP EliteDesk 800', serialNumber: 'HP800045', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2022-06-10'), purchasePrice: 4995, maintenanceReason: 'Actualización de RAM' },
+  { id: '46', name: 'PC-LAB-046', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M90', serialNumber: 'LEN90046', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2023-03-20'), purchasePrice: 4070, maintenanceReason: 'Limpieza y servicio preventivo' },
+  { id: '47', name: 'PC-LAB-047', type: 'Estación de Trabajo', model: 'ASUS VivoPC', serialNumber: 'ASUS47', status: 'mantenimiento', location: 'Taller de Reparación', purchaseDate: new Date('2023-08-05'), purchasePrice: 3515, maintenanceReason: 'Reparación de placa base' },
 
   // Retiradas (3 PCs)
-  { id: '48', name: 'PC-LAB-048', type: 'Estación de Trabajo', model: 'Dell OptiPlex 3090', serialNumber: 'DL3090048', status: 'retirado', location: 'Depósito', purchaseDate: new Date('2018-07-20'), purchasePrice: 700, retirementReason: 'Obsoleto - Sin soporte' },
-  { id: '49', name: 'PC-LAB-049', type: 'Estación de Trabajo', model: 'HP ProDesk 290', serialNumber: 'HP290049', status: 'retirado', location: 'Depósito', purchaseDate: new Date('2017-11-15'), purchasePrice: 650, retirementReason: 'Fin de ciclo de vida' },
-  { id: '50', name: 'PC-LAB-050', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M50', serialNumber: 'LEN50050', status: 'retirado', location: 'Depósito', purchaseDate: new Date('2016-04-10'), purchasePrice: 600, retirementReason: 'Reemplazo por modelo actual' },
+  { id: '48', name: 'PC-LAB-048', type: 'Estación de Trabajo', model: 'Dell OptiPlex 3090', serialNumber: 'DL3090048', status: 'retirado', location: 'Depósito', purchaseDate: new Date('2018-07-20'), purchasePrice: 2590, retirementReason: 'Obsoleto - Sin soporte' },
+  { id: '49', name: 'PC-LAB-049', type: 'Estación de Trabajo', model: 'HP ProDesk 290', serialNumber: 'HP290049', status: 'retirado', location: 'Depósito', purchaseDate: new Date('2017-11-15'), purchasePrice: 2405, retirementReason: 'Fin de ciclo de vida' },
+  { id: '50', name: 'PC-LAB-050', type: 'Estación de Trabajo', model: 'Lenovo ThinkCentre M50', serialNumber: 'LEN50050', status: 'retirado', location: 'Depósito', purchaseDate: new Date('2016-04-10'), purchasePrice: 2220, retirementReason: 'Reemplazo por modelo actual' },
 ]
 
 export const mockComponents = [
@@ -264,3 +264,23 @@ export const mockHardwareChanges = [
   { id: 'hw15', equipmentId: '14', changeType: 'mejora', oldComponent: 'GPU MX350', newComponent: 'GPU GTX 1660', date: new Date('2023-06-15'), cost: 200 },
   { id: 'hw16', equipmentId: '15', changeType: 'reemplazo', oldComponent: 'SSD 256GB', newComponent: 'SSD 512GB', date: new Date('2023-06-01'), cost: 80 },
 ]
+
+// In-memory storage for new records (development only)
+export let newEquipmentList: any[] = []
+export let newComponentsList: any[] = []
+
+export function addNewEquipment(equipment: any) {
+  newEquipmentList.push(equipment)
+}
+
+export function addNewComponent(component: any) {
+  newComponentsList.push(component)
+}
+
+export function getNewEquipment() {
+  return [...newEquipmentList]
+}
+
+export function getNewComponents() {
+  return [...newComponentsList]
+}
