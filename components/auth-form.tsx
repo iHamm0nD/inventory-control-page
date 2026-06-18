@@ -1,42 +1,45 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { authClient } from '@/lib/auth-client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card } from '@/components/ui/card'
 
-export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
+export function AuthForm() {
   const router = useRouter()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-
-  const isSignUp = mode === 'sign-up'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
     setLoading(true)
 
-    const { error } = isSignUp
-      ? await authClient.signUp.email({ email, password, name })
-      : await authClient.signIn.email({ email, password })
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, password }),
+      })
 
-    setLoading(false)
+      const data = await response.json()
 
-    if (error) {
-      setError(error.message ?? 'Something went wrong')
-      return
+      if (!response.ok) {
+        setError(data.error || 'Error al iniciar sesión')
+        setLoading(false)
+        return
+      }
+
+      router.push('/')
+    } catch (err) {
+      setError('Error al procesar la solicitud')
+      setLoading(false)
     }
-
-    router.push('/')
-    router.refresh()
   }
 
   return (
@@ -44,37 +47,23 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
       <Card className="w-full max-w-sm p-6">
         <div className="mb-6">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            {isSignUp ? 'Crear una cuenta' : 'Bienvenido'}
+            Bienvenido
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {isSignUp
-              ? 'Regístrate para comenzar'
-              : 'Inicia sesión para continuar'}
+            Inicia sesión para continuar
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {isSignUp && (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Nombre</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                autoComplete="name"
-              />
-            </div>
-          )}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Correo Electrónico</Label>
+            <Label htmlFor="username">Usuario</Label>
             <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              autoComplete="email"
+              autoComplete="username"
+              placeholder="admin"
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -85,8 +74,8 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={8}
-              autoComplete={isSignUp ? 'new-password' : 'current-password'}
+              autoComplete="current-password"
+              placeholder="admin123!"
             />
           </div>
 
@@ -97,23 +86,9 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
           )}
 
           <Button type="submit" disabled={loading} className="w-full">
-            {loading
-              ? 'Por favor espera...'
-              : isSignUp
-                ? 'Crear cuenta'
-                : 'Iniciar sesión'}
+            {loading ? 'Por favor espera...' : 'Iniciar sesión'}
           </Button>
         </form>
-
-        <p className="text-sm text-muted-foreground text-center mt-6">
-          {isSignUp ? '¿Ya tienes una cuenta? ' : '¿No tienes una cuenta? '}
-          <Link
-            href={isSignUp ? '/sign-in' : '/sign-up'}
-            className="text-foreground font-medium underline-offset-4 hover:underline"
-          >
-            {isSignUp ? 'Inicia sesión' : 'Regístrate'}
-          </Link>
-        </p>
       </Card>
     </main>
   )

@@ -60,6 +60,9 @@ export default function MaintenancePage() {
       setLoading(true)
       const eqData = await getEquipmentList()
       setEquipment(eqData as Equipment[])
+      // Load maintenance records
+      const maintData = await getEquipmentMaintenance('')
+      setMaintenance(maintData as MaintenanceRecord[])
     } catch (error) {
       console.error('Error loading data:', error)
     } finally {
@@ -449,19 +452,56 @@ export default function MaintenancePage() {
             )}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">
-              No hay registros de mantenimiento para mostrar
-            </p>
-            <Button
-              onClick={() => {
-                setShowForm(true)
-                setStep('select')
-              }}
-              className="bg-primary hover:bg-blue-600 text-primary-foreground"
-            >
-              Crear Primer Registro
-            </Button>
+          <div>
+            {maintenance.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground mb-4">
+                  No hay registros de mantenimiento para mostrar
+                </p>
+                <Button
+                  onClick={() => {
+                    setShowForm(true)
+                    setStep('select')
+                  }}
+                  className="bg-primary hover:bg-blue-600 text-primary-foreground"
+                >
+                  Crear Primer Registro
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {maintenance.map((maint) => (
+                  <div key={maint.id} className="bg-card border border-border rounded-lg p-6 hover:bg-muted/30">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="font-semibold text-lg text-foreground">{equipment.find(e => e.id === maint.equipmentId)?.name || 'Equipo'}</h3>
+                        <p className="text-sm text-muted-foreground capitalize mt-1">{maint.maintenanceType}</p>
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(maint.startDate).toLocaleDateString('es-MX')}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 text-sm mb-3">
+                      <div>
+                        <p className="text-muted-foreground">Realizador</p>
+                        <p className="text-foreground font-medium">{maint.performedBy || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Costo</p>
+                        <p className="text-foreground font-medium">${maint.cost || '0.00'}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Estado</p>
+                        <p className="text-foreground font-medium">Completado</p>
+                      </div>
+                    </div>
+                    {maint.description && (
+                      <p className="text-sm text-muted-foreground">{maint.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </main>

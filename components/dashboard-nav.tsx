@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 
 export function DashboardNav() {
@@ -11,8 +10,13 @@ export function DashboardNav() {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await authClient.signOut()
+    try {
+      await fetch('/api/logout', { method: 'POST' })
+    } catch (error) {
+      console.error('[v0] Logout error:', error)
+    }
     router.push('/sign-in')
+    router.refresh()
   }
 
   const navItems = [

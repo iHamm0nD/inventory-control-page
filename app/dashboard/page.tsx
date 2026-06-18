@@ -1,6 +1,3 @@
-import { auth } from '@/lib/auth'
-import { redirect } from 'next/navigation'
-import { headers } from 'next/headers'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { getInventorySummary } from '@/app/actions/equipment'
@@ -11,12 +8,6 @@ export const metadata = {
 }
 
 export default async function DashboardPage() {
-  const session = await auth.api.getSession({ headers: await headers() })
-
-  if (!session?.user) {
-    redirect('/sign-in')
-  }
-
   const summary = await getInventorySummary()
 
   const stats = [
