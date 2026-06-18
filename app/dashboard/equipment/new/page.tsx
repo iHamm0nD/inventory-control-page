@@ -5,6 +5,7 @@ import { createEquipment } from '@/app/actions/equipment'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { Plus, X } from 'lucide-react'
 
 const EQUIPMENT_TYPES = [
   'Computadora de Escritorio',
@@ -20,10 +21,36 @@ const EQUIPMENT_TYPES = [
   'Otro',
 ]
 
+const COMPONENT_TYPES = [
+  'RAM',
+  'Almacenamiento',
+  'GPU',
+  'Fuente',
+  'Red',
+  'Refrigeración',
+  'Monitor',
+  'Audio',
+  'Óptico',
+  'Teclado',
+  'Ratón',
+  'Motherboard',
+  'Procesador',
+  'Otro',
+]
+
+interface Component {
+  id: string
+  name: string
+  type: string
+}
+
 export default function NewEquipmentPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [components, setComponents] = useState<Component[]>([])
+  const [showComponentForm, setShowComponentForm] = useState(false)
+  const [newComponent, setNewComponent] = useState({ name: '', type: '' })
 
   const [formData, setFormData] = useState({
     name: '',
@@ -42,6 +69,36 @@ export default function NewEquipmentPage() {
       ...prev,
       [name]: value,
     }))
+  }
+
+  const handleComponentChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setNewComponent((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const addComponent = () => {
+    if (!newComponent.name || !newComponent.type) {
+      setError('El nombre y tipo del componente son requeridos')
+      return
+    }
+
+    const component: Component = {
+      id: Math.random().toString(36).substr(2, 9),
+      name: newComponent.name,
+      type: newComponent.type,
+    }
+
+    setComponents([...components, component])
+    setNewComponent({ name: '', type: '' })
+    setShowComponentForm(false)
+    setError('')
+  }
+
+  const removeComponent = (id: string) => {
+    setComponents(components.filter((c) => c.id !== id))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,6 +121,7 @@ export default function NewEquipmentPage() {
         location: formData.location,
         purchaseDate: formData.purchaseDate ? new Date(formData.purchaseDate) : undefined,
         purchasePrice: formData.purchasePrice ? parseFloat(formData.purchasePrice) : undefined,
+        components: components.map((c) => ({ name: c.name, type: c.type })),
       })
       router.push('/dashboard/equipment')
     } catch (err) {
@@ -231,6 +289,106 @@ export default function NewEquipmentPage() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Section 3: Componentes */}
+            <div className="border-t border-border pt-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-semibold text-foreground">Componentes</h2>
+                {!showComponentForm && (
+                  <Button
+                    type="button"
+                    onClick={() => setShowComponentForm(true)}
+                    variant="outline"
+                    size="sm"
+                    className="flex gap-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Agregar Componente
+                  </Button>
+                )}
+              </div>
+
+              {showComponentForm && (
+                <div className="bg-muted border border-border rounded-lg p-4 mb-4 space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Nombre del Componente
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={newComponent.name}
+                      onChange={handleComponentChange}
+                      placeholder="Ej: RAM DDR4 16GB"
+                      className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-2">
+                      Tipo de Componente
+                    </label>
+                    <select
+                      name="type"
+                      value={newComponent.type}
+                      onChange={handleComponentChange}
+                      className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="">Selecciona un tipo...</option>
+                      {COMPONENT_TYPES.map((type) => (
+                        <option key={type} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="flex gap-2 justify-end">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setShowComponentForm(false)
+                        setNewComponent({ name: '', type: '' })
+                      }}
+                      className="border-border hover:bg-muted"
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={addComponent}
+                      className="bg-primary hover:bg-blue-600 text-primary-foreground"
+                    >
+                      Agregar
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {components.length > 0 && (
+                <div className="space-y-2">
+                  {components.map((comp) => (
+                    <div
+                      key={comp.id}
+                      className="flex justify-between items-center bg-muted border border-border rounded-lg p-3"
+                    >
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{comp.name}</p>
+                        <p className="text-xs text-muted-foreground">{comp.type}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeComponent(comp.id)}
+                        className="p-1 hover:bg-destructive/20 rounded-lg text-destructive transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Actions */}

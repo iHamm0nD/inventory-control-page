@@ -5,7 +5,7 @@ import { equipment, component, maintenance, hardwareChange, equipmentHistory } f
 import { and, eq, desc, gte, lte } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { v4 as uuidv4 } from 'uuid'
-import { mockEquipment, mockComponents, mockMaintenance, mockHardwareChanges } from '@/lib/mock-data'
+import { mockEquipment, mockComponents, mockMaintenance, mockHardwareChanges, addNewEquipment, addNewComponent, getNewEquipment, getNewComponents } from '@/lib/mock-data'
 
 // Use a demo user ID for development
 const DEMO_USER_ID = 'demo-user-001'
@@ -28,6 +28,7 @@ export async function createEquipment(data: {
   location?: string
   purchaseDate?: Date
   purchasePrice?: number
+  components?: Array<{ name: string; type: string }>
 }) {
   const userId = getUserId()
 
@@ -41,11 +42,26 @@ export async function createEquipment(data: {
     description: data.description,
     location: data.location,
     purchaseDate: data.purchaseDate,
-    purchasePrice: data.purchasePrice ? data.purchasePrice.toString() : undefined,
+    purchasePrice: data.purchasePrice,
     status: 'activo',
   }
 
-  await db.insert(equipment).values(newEquipment)
+  // Store equipment in memory
+  addNewEquipment(newEquipment)
+
+  // Store components if provided
+  if (data.components && data.components.length > 0) {
+    data.components.forEach((comp) => {
+      const newComponent = {
+        id: uuidv4(),
+        equipmentId: newEquipment.id,
+        name: comp.name,
+        type: comp.type,
+      }
+      addNewComponent(newComponent)
+    })
+  }
+
   revalidatePath('/dashboard/equipment')
   return newEquipment
 }
@@ -70,8 +86,9 @@ export async function deleteEquipment(id: string) {
 }
 
 export async function getEquipmentList() {
-  // Return mock equipment data for development
-  return mockEquipment.map(eq => ({
+  // Return mock equipment data + new equipment for development
+  const allEquipment = [...mockEquipment, ...getNewEquipment()]
+  return allEquipment.map(eq => ({
     id: eq.id,
     userId: 'demo-user-001',
     name: eq.name,
@@ -81,8 +98,8 @@ export async function getEquipmentList() {
     description: eq.type,
     location: eq.location,
     purchaseDate: eq.purchaseDate,
-    purchasePrice: eq.purchasePrice?.toString(),
-    status: eq.status,
+    purchasePrice: typeof eq.purchasePrice === 'string' ? eq.purchasePrice : eq.purchasePrice?.toString(),
+    status: eq.status || 'activo',
     createdAt: eq.purchaseDate || new Date(),
     updatedAt: new Date(),
     lastMaintenanceDate: null,
@@ -90,8 +107,9 @@ export async function getEquipmentList() {
 }
 
 export async function getEquipmentById(id: string) {
-  // Return mock equipment by ID for development
-  const eq_item = mockEquipment.find(e => e.id === id)
+  // Return mock equipment by ID + new equipment for development
+  const allEquipment = [...mockEquipment, ...getNewEquipment()]
+  const eq_item = allEquipment.find(e => e.id === id)
   
   if (!eq_item) throw new Error('Equipment not found')
   
@@ -105,8 +123,8 @@ export async function getEquipmentById(id: string) {
     description: eq_item.type,
     location: eq_item.location,
     purchaseDate: eq_item.purchaseDate,
-    purchasePrice: eq_item.purchasePrice?.toString(),
-    status: eq_item.status,
+    purchasePrice: typeof eq_item.purchasePrice === 'string' ? eq_item.purchasePrice : eq_item.purchasePrice?.toString(),
+    status: eq_item.status || 'activo',
     createdAt: eq_item.purchaseDate || new Date(),
     updatedAt: new Date(),
     lastMaintenanceDate: null,
@@ -151,8 +169,9 @@ export async function addComponent(equipmentId: string, data: {
 }
 
 export async function getEquipmentComponents(equipmentId: string) {
-  // Return mock component data for development
-  return mockComponents
+  // Return mock component data + new components for development
+  const allComponents = [...mockComponents, ...getNewComponents()]
+  return allComponents
     .filter(c => c.equipmentId === equipmentId)
     .map(c => ({
       id: c.id,
