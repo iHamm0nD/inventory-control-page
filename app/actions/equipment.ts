@@ -5,6 +5,7 @@ import { equipment, component, maintenance, hardwareChange, equipmentHistory } f
 import { and, eq, desc, gte, lte } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { v4 as uuidv4 } from 'uuid'
+import { mockEquipment } from '@/lib/mock-data'
 
 // Use a demo user ID for development
 const DEMO_USER_ID = 'demo-user-001'
@@ -65,27 +66,47 @@ export async function deleteEquipment(id: string) {
 }
 
 export async function getEquipmentList() {
-  const userId = getUserId()
-
-  const result = await db
-    .select()
-    .from(equipment)
-    .where(eq(equipment.userId, userId))
-    .orderBy(desc(equipment.createdAt))
-
-  return result
+  // Return mock equipment data for development
+  return mockEquipment.map(eq => ({
+    id: eq.id,
+    userId: 'demo-user-001',
+    name: eq.name,
+    type: eq.type,
+    model: eq.model,
+    serialNumber: eq.serialNumber,
+    description: eq.type,
+    location: eq.location,
+    purchaseDate: eq.purchaseDate,
+    purchasePrice: eq.purchasePrice?.toString(),
+    status: eq.status,
+    createdAt: eq.purchaseDate || new Date(),
+    updatedAt: new Date(),
+    lastMaintenanceDate: null,
+  }))
 }
 
 export async function getEquipmentById(id: string) {
-  const userId = getUserId()
-
-  const [eq_item] = await db
-    .select()
-    .from(equipment)
-    .where(and(eq(equipment.id, id), eq(equipment.userId, userId)))
-
+  // Return mock equipment by ID for development
+  const eq_item = mockEquipment.find(e => e.id === id)
+  
   if (!eq_item) throw new Error('Equipment not found')
-  return eq_item
+  
+  return {
+    id: eq_item.id,
+    userId: 'demo-user-001',
+    name: eq_item.name,
+    type: eq_item.type,
+    model: eq_item.model,
+    serialNumber: eq_item.serialNumber,
+    description: eq_item.type,
+    location: eq_item.location,
+    purchaseDate: eq_item.purchaseDate,
+    purchasePrice: eq_item.purchasePrice?.toString(),
+    status: eq_item.status,
+    createdAt: eq_item.purchaseDate || new Date(),
+    updatedAt: new Date(),
+    lastMaintenanceDate: null,
+  }
 }
 
 // ============= Component Management =============
@@ -126,13 +147,23 @@ export async function addComponent(equipmentId: string, data: {
 }
 
 export async function getEquipmentComponents(equipmentId: string) {
-  const userId = getUserId()
-
-  return await db
-    .select()
-    .from(component)
-    .where(and(eq(component.equipmentId, equipmentId), eq(component.userId, userId)))
-    .orderBy(desc(component.createdAt))
+  // Return mock component data for development
+  return mockComponents
+    .filter(c => c.equipmentId === equipmentId)
+    .map(c => ({
+      id: c.id,
+      userId: 'demo-user-001',
+      equipmentId: c.equipmentId,
+      name: c.name,
+      componentType: c.type,
+      model: c.name,
+      serialNumber: '',
+      specifications: '',
+      installationDate: new Date(),
+      status: 'activo',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }))
 }
 
 export async function deleteComponent(componentId: string) {
@@ -182,13 +213,23 @@ export async function recordMaintenance(data: {
 }
 
 export async function getEquipmentMaintenance(equipmentId: string) {
-  const userId = getUserId()
-
-  return await db
-    .select()
-    .from(maintenance)
-    .where(and(eq(maintenance.equipmentId, equipmentId), eq(maintenance.userId, userId)))
-    .orderBy(desc(maintenance.startDate))
+  // Return mock maintenance data for development
+  return mockMaintenance
+    .filter(m => m.equipmentId === equipmentId)
+    .map(m => ({
+      id: m.id,
+      userId: 'demo-user-001',
+      equipmentId: m.equipmentId,
+      maintenanceType: m.type,
+      description: m.description,
+      performedBy: m.technician,
+      startDate: m.date,
+      endDate: null,
+      cost: '0',
+      notes: m.notes,
+      createdAt: m.date,
+      updatedAt: m.date,
+    }))
 }
 
 // ============= Hardware Changes =============
@@ -240,13 +281,24 @@ export async function recordHardwareChange(data: {
 }
 
 export async function getEquipmentHardwareChanges(equipmentId: string) {
-  const userId = getUserId()
-
-  return await db
-    .select()
-    .from(hardwareChange)
-    .where(and(eq(hardwareChange.equipmentId, equipmentId), eq(hardwareChange.userId, userId)))
-    .orderBy(desc(hardwareChange.changeDate))
+  // Return mock hardware changes for development
+  return mockHardwareChanges
+    .filter(h => h.equipmentId === equipmentId)
+    .map(h => ({
+      id: h.id,
+      userId: 'demo-user-001',
+      maintenanceId: '',
+      equipmentId: h.equipmentId,
+      componentId: '',
+      action: h.changeType,
+      oldComponent: h.oldComponent,
+      newComponent: h.newComponent,
+      changeDate: h.date,
+      cost: h.cost?.toString(),
+      reason: `Changed from ${h.oldComponent} to ${h.newComponent}`,
+      createdAt: h.date,
+      updatedAt: h.date,
+    }))
 }
 
 // ============= Equipment History =============
@@ -262,13 +314,18 @@ export async function getEquipmentHistory(equipmentId: string) {
 
 // ============= Reports =============
 export async function getInventorySummary() {
-  // Return demo data for development
+  // Count equipment by status from mock data
+  const active = mockEquipment.filter(e => e.status === 'activo').length
+  const inactive = mockEquipment.filter(e => e.status === 'inactivo').length
+  const maintenance = mockEquipment.filter(e => e.status === 'mantenimiento').length
+  const retired = mockEquipment.filter(e => e.status === 'retirado').length
+  
   return {
-    total: 24,
-    active: 18,
-    inactive: 3,
-    maintenance: 2,
-    retired: 1,
+    total: mockEquipment.length,
+    active,
+    inactive,
+    maintenance,
+    retired,
   }
 }
 
