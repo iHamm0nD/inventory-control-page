@@ -5,10 +5,14 @@ import { equipment, component, maintenance, hardwareChange, equipmentHistory } f
 import { and, eq, desc, gte, lte } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { v4 as uuidv4 } from 'uuid'
-import { mockEquipment } from '@/lib/mock-data'
+import { mockEquipment, mockComponents, mockMaintenance, mockHardwareChanges } from '@/lib/mock-data'
 
 // Use a demo user ID for development
 const DEMO_USER_ID = 'demo-user-001'
+
+// In-memory storage for new records (development only)
+let newMaintenanceRecords: any[] = []
+let newHardwareChanges: any[] = []
 
 function getUserId() {
   return DEMO_USER_ID
@@ -185,11 +189,10 @@ export async function recordMaintenance(data: {
   cost?: number
   notes?: string
 }) {
-  const userId = getUserId()
-
+  // Store maintenance record in memory for development
   const newMaintenance = {
     id: uuidv4(),
-    userId,
+    userId: DEMO_USER_ID,
     equipmentId: data.equipmentId,
     maintenanceType: data.maintenanceType,
     description: data.description,
@@ -200,20 +203,33 @@ export async function recordMaintenance(data: {
     notes: data.notes,
   }
 
-  const [result] = await db.insert(maintenance).values(newMaintenance).returning()
-
-  // Update equipment's last maintenance date
-  await db
-    .update(equipment)
-    .set({ lastMaintenanceDate: new Date() })
-    .where(and(eq(equipment.id, data.equipmentId), eq(equipment.userId, userId)))
-
+  newMaintenanceRecords.push(newMaintenance)
   revalidatePath(`/dashboard/equipment/${data.equipmentId}`)
-  return result
+  return newMaintenance
 }
 
 export async function getEquipmentMaintenance(equipmentId: string) {
   // Return mock maintenance data for development
+  if (!equipmentId) {
+    // Return all maintenance records (mock + new)
+    const allMaintenance = [...mockMaintenance, ...newMaintenanceRecords]
+    return allMaintenance.map(m => ({
+      id: m.id,
+      userId: 'demo-user-001',
+      equipmentId: m.equipmentId,
+      maintenanceType: m.maintenanceType || m.type,
+      description: m.description,
+      performedBy: m.performedBy || m.technician,
+      startDate: m.startDate || m.date,
+      endDate: m.endDate || null,
+      cost: m.cost || '0',
+      notes: m.notes,
+      createdAt: m.startDate || m.date,
+      updatedAt: m.startDate || m.date,
+    }))
+  }
+  
+  // Return filtered maintenance data for specific equipment
   return mockMaintenance
     .filter(m => m.equipmentId === equipmentId)
     .map(m => ({
@@ -243,11 +259,10 @@ export async function recordHardwareChange(data: {
   cost?: number
   reason?: string
 }) {
-  const userId = getUserId()
-
+  // Store hardware change in memory for development
   const newChange = {
     id: uuidv4(),
-    userId,
+    userId: DEMO_USER_ID,
     maintenanceId: data.maintenanceId,
     equipmentId: data.equipmentId,
     componentId: data.componentId,
@@ -259,25 +274,9 @@ export async function recordHardwareChange(data: {
     reason: data.reason,
   }
 
-  const [result] = await db.insert(hardwareChange).values(newChange).returning()
-
-  // Record in equipment history
-  const equipmentComponents = await getEquipmentComponents(data.equipmentId)
-  const componentsAfter = JSON.stringify(equipmentComponents.map((c) => ({ id: c.id, name: c.name, type: c.componentType })))
-
-  await db.insert(equipmentHistory).values({
-    id: uuidv4(),
-    userId,
-    equipmentId: data.equipmentId,
-    eventType: 'cambio_componente',
-    description: `${data.action}: ${data.oldComponent} → ${data.newComponent}`,
-    componentsAfter,
-    cost: data.cost ? data.cost.toString() : undefined,
-    eventDate: new Date(),
-  })
-
+  newHardwareChanges.push(newChange)
   revalidatePath(`/dashboard/equipment/${data.equipmentId}`)
-  return result
+  return newChange
 }
 
 export async function getEquipmentHardwareChanges(equipmentId: string) {
@@ -303,13 +302,30 @@ export async function getEquipmentHardwareChanges(equipmentId: string) {
 
 // ============= Equipment History =============
 export async function getEquipmentHistory(equipmentId: string) {
-  const userId = getUserId()
+  // Return combined mock maintenance and hardware changes as history
+  const maintenanceHistory = newMaintenanceRecords
+    .filter(m => m.equipmentId === equipmentId)
+    .map(m => ({
+      id: m.id,
+      eventType: 'mantenimiento',
+      description: `Mantenimiento ${m.maintenanceType}: ${m.description}`,
+      cost: m.cost,
+      eventDate: m.startDate,
+    }))
 
-  return await db
-    .select()
-    .from(equipmentHistory)
-    .where(and(eq(equipmentHistory.equipmentId, equipmentId), eq(equipmentHistory.userId, userId)))
-    .orderBy(desc(equipmentHistory.eventDate))
+  const hardwareHistory = newHardwareChanges
+    .filter(h => h.equipmentId === equipmentId)
+    .map(h => ({
+      id: h.id,
+      eventType: 'cambio_componente',
+      description: `${h.action}: ${h.oldComponent} → ${h.newComponent}`,
+      cost: h.cost,
+      eventDate: h.changeDate,
+    }))
+
+  return [...maintenanceHistory, ...hardwareHistory].sort((a, b) => 
+    new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime()
+  )
 }
 
 // ============= Reports =============
@@ -330,46 +346,83 @@ export async function getInventorySummary() {
 }
 
 export async function getUpgradedEquipment() {
-  const userId = getUserId()
+  // Return equipment with hardware changes from mock data and new records
+  const allChanges = [...mockHardwareChanges, ...newHardwareChanges]
+  const upgradeMap = new Map<string, {
+    equipmentId: string
+    equipmentName: string
+    eventCount: number
+    totalCost: number
+    lastEvent: Date
+  }>()
 
-  const upgrades = await db
-    .select({
-      equipmentId: equipmentHistory.equipmentId,
-      equipmentName: equipment.name,
-      eventCount: equipmentHistory.id,
-      totalCost: equipmentHistory.cost,
-      lastEvent: equipmentHistory.eventDate,
-    })
-    .from(equipmentHistory)
-    .innerJoin(equipment, eq(equipmentHistory.equipmentId, equipment.id))
-    .where(and(eq(equipmentHistory.userId, userId), eq(equipmentHistory.eventType, 'cambio_componente')))
-    .orderBy(desc(equipmentHistory.eventDate))
+  allChanges.forEach(change => {
+    const equipment = mockEquipment.find(e => e.id === change.equipmentId)
+    if (equipment) {
+      const key = change.equipmentId
+      if (!upgradeMap.has(key)) {
+        upgradeMap.set(key, {
+          equipmentId: change.equipmentId,
+          equipmentName: equipment.name,
+          eventCount: 0,
+          totalCost: 0,
+          lastEvent: change.date,
+        })
+      }
+      const item = upgradeMap.get(key)!
+      item.eventCount += 1
+      item.totalCost += change.cost || 0
+      if (change.date > item.lastEvent) {
+        item.lastEvent = change.date
+      }
+    }
+  })
 
-  return upgrades
+  return Array.from(upgradeMap.values())
 }
 
 export async function getMaintenanceCosts() {
-  const userId = getUserId()
+  // Return maintenance costs from mock data and new records
+  const allMaintenance = [...mockMaintenance, ...newMaintenanceRecords]
+  const costMap = new Map<string, {
+    equipmentId: string
+    equipmentName: string
+    totalCost: number
+    maintenanceCount: number
+  }>()
 
-  return await db
-    .select({
-      equipmentId: maintenance.equipmentId,
-      equipmentName: equipment.name,
-      totalCost: maintenance.cost,
-      maintenanceCount: maintenance.id,
-    })
-    .from(maintenance)
-    .innerJoin(equipment, eq(maintenance.equipmentId, equipment.id))
-    .where(eq(maintenance.userId, userId))
-    .orderBy(desc(maintenance.cost))
+  allMaintenance.forEach(maint => {
+    const equipment = mockEquipment.find(e => e.id === maint.equipmentId)
+    if (equipment) {
+      const key = maint.equipmentId
+      if (!costMap.has(key)) {
+        costMap.set(key, {
+          equipmentId: maint.equipmentId,
+          equipmentName: equipment.name,
+          totalCost: 0,
+          maintenanceCount: 0,
+        })
+      }
+      const item = costMap.get(key)!
+      item.totalCost += parseFloat(maint.cost || '0')
+      item.maintenanceCount += 1
+    }
+  })
+
+  return Array.from(costMap.values()).sort((a, b) => b.totalCost - a.totalCost)
 }
 
 export async function getHardwareChangeReport() {
-  const userId = getUserId()
-
-  return await db
-    .select()
-    .from(hardwareChange)
-    .where(eq(hardwareChange.userId, userId))
-    .orderBy(desc(hardwareChange.changeDate))
+  // Return hardware changes from mock data and new records
+  const allChanges = [...mockHardwareChanges, ...newHardwareChanges]
+  
+  return allChanges.map(hw => ({
+    id: hw.id || uuidv4(),
+    equipmentId: hw.equipmentId,
+    action: hw.changeType || 'reemplazo',
+    oldComponent: hw.oldComponent,
+    newComponent: hw.newComponent,
+    cost: hw.cost?.toString(),
+    changeDate: hw.date,
+  })).sort((a, b) => new Date(b.changeDate).getTime() - new Date(a.changeDate).getTime())
 }
