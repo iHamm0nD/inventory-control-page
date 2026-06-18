@@ -107,8 +107,9 @@ export async function getEquipmentList() {
 }
 
 export async function getEquipmentById(id: string) {
-  // Return mock equipment by ID for development
-  const eq_item = mockEquipment.find(e => e.id === id)
+  // Return mock equipment by ID + new equipment for development
+  const allEquipment = [...mockEquipment, ...getNewEquipment()]
+  const eq_item = allEquipment.find(e => e.id === id)
   
   if (!eq_item) throw new Error('Equipment not found')
   
@@ -122,8 +123,8 @@ export async function getEquipmentById(id: string) {
     description: eq_item.type,
     location: eq_item.location,
     purchaseDate: eq_item.purchaseDate,
-    purchasePrice: eq_item.purchasePrice?.toString(),
-    status: eq_item.status,
+    purchasePrice: typeof eq_item.purchasePrice === 'string' ? eq_item.purchasePrice : eq_item.purchasePrice?.toString(),
+    status: eq_item.status || 'activo',
     createdAt: eq_item.purchaseDate || new Date(),
     updatedAt: new Date(),
     lastMaintenanceDate: null,
