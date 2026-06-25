@@ -5,7 +5,7 @@ import { equipment, component, maintenance, hardwareChange, equipmentHistory } f
 import { and, eq, desc, gte, lte } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { v4 as uuidv4 } from 'uuid'
-import { mockEquipment, mockComponents, mockMaintenance, mockHardwareChanges, addNewEquipment, addNewComponent, getNewEquipment, getNewComponents } from '@/lib/mock-data'
+import { mockEquipment, mockComponents, mockMaintenance, mockHardwareChanges, mockSoftware, mockSubscriptions, addNewEquipment, addNewComponent, addNewSoftware, addNewSubscription, getNewEquipment, getNewComponents, getNewSoftware, getNewSubscriptions } from '@/lib/mock-data'
 
 // Use a demo user ID for development
 const DEMO_USER_ID = 'demo-user-001'
@@ -444,4 +444,90 @@ export async function getHardwareChangeReport() {
     cost: hw.cost?.toString(),
     changeDate: hw.date,
   })).sort((a, b) => new Date(b.changeDate).getTime() - new Date(a.changeDate).getTime())
+}
+
+// ============= Software Management =============
+export async function addSoftware(data: {
+  equipmentId: string
+  name: string
+  version: string
+  installDate: Date
+  license: 'Licenciado' | 'Gratuito'
+  vendor?: string
+}) {
+  const newSoftware = {
+    id: uuidv4(),
+    equipmentId: data.equipmentId,
+    name: data.name,
+    version: data.version,
+    installDate: data.installDate,
+    license: data.license,
+    vendor: data.vendor,
+  }
+
+  addNewSoftware(newSoftware)
+  revalidatePath(`/dashboard/equipment/${data.equipmentId}`)
+  return newSoftware
+}
+
+export async function getEquipmentSoftware(equipmentId: string) {
+  // Return mock software + new software for development
+  const allSoftware = [...mockSoftware, ...getNewSoftware()]
+  return allSoftware
+    .filter(s => s.equipmentId === equipmentId)
+    .map(s => ({
+      id: s.id,
+      equipmentId: s.equipmentId,
+      name: s.name,
+      version: s.version,
+      installDate: s.installDate,
+      license: s.license,
+      vendor: s.vendor || 'Desconocido',
+    }))
+}
+
+// ============= Subscriptions Management =============
+export async function addSubscription(data: {
+  equipmentId: string
+  name: string
+  plan: string
+  status: 'activa' | 'inactiva'
+  startDate: Date
+  endDate: Date
+  cost: number
+  renewal: 'mensual' | 'trimestral' | 'anual' | 'bienal'
+}) {
+  const newSubscription = {
+    id: uuidv4(),
+    equipmentId: data.equipmentId,
+    name: data.name,
+    plan: data.plan,
+    status: data.status,
+    startDate: data.startDate,
+    endDate: data.endDate,
+    cost: data.cost,
+    renewal: data.renewal,
+  }
+
+  addNewSubscription(newSubscription)
+  revalidatePath(`/dashboard/equipment/${data.equipmentId}`)
+  return newSubscription
+}
+
+export async function getEquipmentSubscriptions(equipmentId: string) {
+  // Return mock subscriptions + new subscriptions for development
+  const allSubscriptions = [...mockSubscriptions, ...getNewSubscriptions()]
+  return allSubscriptions
+    .filter(s => s.equipmentId === equipmentId)
+    .map(s => ({
+      id: s.id,
+      equipmentId: s.equipmentId,
+      name: s.name,
+      plan: s.plan,
+      status: s.status,
+      startDate: s.startDate,
+      endDate: s.endDate,
+      cost: s.cost,
+      renewal: s.renewal,
+    }))
 }

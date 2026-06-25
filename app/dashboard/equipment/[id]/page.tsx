@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getEquipmentById, getEquipmentComponents, getEquipmentMaintenance, getEquipmentHistory } from '@/app/actions/equipment'
+import { getEquipmentById, getEquipmentComponents, getEquipmentMaintenance, getEquipmentHistory, getEquipmentSoftware, getEquipmentSubscriptions, addSoftware, addSubscription } from '@/app/actions/equipment'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { Plus, X } from 'lucide-react'
 
 interface Equipment {
   id: string
@@ -55,6 +56,28 @@ interface HistoryEvent {
   createdAt: Date
 }
 
+interface Software {
+  id: string
+  equipmentId: string
+  name: string
+  version: string
+  installDate: Date
+  license: 'Licenciado' | 'Gratuito'
+  vendor?: string
+}
+
+interface Subscription {
+  id: string
+  equipmentId: string
+  name: string
+  plan: string
+  status: 'activa' | 'inactiva'
+  startDate: Date
+  endDate: Date
+  cost: number
+  renewal: 'mensual' | 'trimestral' | 'anual' | 'bienal'
+}
+
 export default function EquipmentDetailPage() {
   const params = useParams()
   const id = params.id as string
@@ -63,8 +86,12 @@ export default function EquipmentDetailPage() {
   const [components, setComponents] = useState<Component[]>([])
   const [maintenance, setMaintenance] = useState<Maintenance[]>([])
   const [history, setHistory] = useState<HistoryEvent[]>([])
+  const [software, setSoftware] = useState<Software[]>([])
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'components' | 'maintenance' | 'history'>('components')
+  const [activeTab, setActiveTab] = useState<'components' | 'maintenance' | 'history' | 'software' | 'subscriptions'>('components')
+  const [showSoftwareForm, setShowSoftwareForm] = useState(false)
+  const [showSubscriptionForm, setShowSubscriptionForm] = useState(false)
 
   useEffect(() => {
     loadData()
@@ -73,11 +100,13 @@ export default function EquipmentDetailPage() {
   async function loadData() {
     try {
       setLoading(true)
-      const [eq, comps, maint, hist] = await Promise.all([
+      const [eq, comps, maint, hist, soft, subs] = await Promise.all([
         getEquipmentById(id),
         getEquipmentComponents(id),
         getEquipmentMaintenance(id),
         getEquipmentHistory(id),
+        getEquipmentSoftware(id),
+        getEquipmentSubscriptions(id),
       ])
       setEquipment(eq as Equipment)
       setComponents(comps as Component[])

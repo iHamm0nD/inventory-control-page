@@ -265,9 +265,49 @@ export const mockHardwareChanges = [
   { id: 'hw16', equipmentId: '15', changeType: 'reemplazo', oldComponent: 'SSD 256GB', newComponent: 'SSD 512GB', date: new Date('2023-06-01'), cost: 80 },
 ]
 
+// Programas instalados por equipo
+export const mockSoftware = [
+  // PC-LAB-001
+  { id: 'sw1', equipmentId: '1', name: 'Windows 10 Pro', version: '22H2', installDate: new Date('2022-01-15'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw2', equipmentId: '1', name: 'Microsoft Office 2021', version: '2108', installDate: new Date('2022-01-20'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw3', equipmentId: '1', name: 'Google Chrome', version: '120.0.6099', installDate: new Date('2023-01-10'), license: 'Gratuito', vendor: 'Google' },
+  { id: 'sw4', equipmentId: '1', name: 'Adobe Reader DC', version: '23.006', installDate: new Date('2023-06-15'), license: 'Gratuito', vendor: 'Adobe' },
+  { id: 'sw5', equipmentId: '1', name: 'MATLAB R2023b', version: '23.2', installDate: new Date('2023-09-01'), license: 'Licenciado', vendor: 'MathWorks' },
+  // PC-LAB-002
+  { id: 'sw6', equipmentId: '2', name: 'Windows 10 Pro', version: '22H2', installDate: new Date('2022-01-15'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw7', equipmentId: '2', name: 'Microsoft Office 2021', version: '2108', installDate: new Date('2022-01-20'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw8', equipmentId: '2', name: 'Visual Studio Code', version: '1.85.0', installDate: new Date('2023-02-01'), license: 'Gratuito', vendor: 'Microsoft' },
+  { id: 'sw9', equipmentId: '2', name: 'Python 3.11', version: '3.11.7', installDate: new Date('2023-03-15'), license: 'Gratuito', vendor: 'Python Software Foundation' },
+  // PC-LAB-003
+  { id: 'sw10', equipmentId: '3', name: 'Windows 10 Pro', version: '22H2', installDate: new Date('2022-01-15'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw11', equipmentId: '3', name: 'LibreOffice 7.5', version: '7.5.4', installDate: new Date('2023-04-10'), license: 'Gratuito', vendor: 'The Document Foundation' },
+  { id: 'sw12', equipmentId: '3', name: 'GIMP 2.10', version: '2.10.36', installDate: new Date('2023-05-20'), license: 'Gratuito', vendor: 'GIMP Team' },
+  // PC-LAB-012
+  { id: 'sw13', equipmentId: '12', name: 'Windows 10 Enterprise', version: '22H2', installDate: new Date('2022-06-10'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw14', equipmentId: '12', name: 'Microsoft Office 2021', version: '2108', installDate: new Date('2022-06-15'), license: 'Licenciado', vendor: 'Microsoft' },
+  { id: 'sw15', equipmentId: '12', name: 'AutoCAD 2024', version: '2024.1', installDate: new Date('2024-01-10'), license: 'Licenciado', vendor: 'Autodesk' },
+  { id: 'sw16', equipmentId: '12', name: 'VLC Media Player', version: '3.0.20', installDate: new Date('2023-07-01'), license: 'Gratuito', vendor: 'VideoLAN' },
+]
+
+// Suscripciones activas/inactivas
+export const mockSubscriptions = [
+  // Suscripciones activas
+  { id: 'sub1', equipmentId: '1', name: 'Microsoft Office 365', plan: 'Empresarial', status: 'activa', startDate: new Date('2024-01-01'), endDate: new Date('2025-01-01'), cost: 1500, renewal: 'anual' },
+  { id: 'sub2', equipmentId: '1', name: 'MATLAB Annual License', plan: 'Académica', status: 'activa', startDate: new Date('2024-01-15'), endDate: new Date('2025-01-15'), cost: 3000, renewal: 'anual' },
+  { id: 'sub3', equipmentId: '2', name: 'Microsoft Office 365', plan: 'Profesional', status: 'activa', startDate: new Date('2023-06-01'), endDate: new Date('2025-06-01'), cost: 900, renewal: 'bienal' },
+  { id: 'sub4', equipmentId: '3', name: 'Antivirus Kaspersky', plan: 'Empresa', status: 'activa', startDate: new Date('2024-03-01'), endDate: new Date('2025-03-01'), cost: 500, renewal: 'anual' },
+  { id: 'sub5', equipmentId: '12', name: 'AutoCAD Suscripción', plan: 'Mensual', status: 'activa', startDate: new Date('2024-01-01'), endDate: new Date('2024-12-01'), cost: 500, renewal: 'mensual' },
+  // Suscripciones inactivas
+  { id: 'sub6', equipmentId: '1', name: 'Adobe Creative Cloud', plan: 'Anual', status: 'inactiva', startDate: new Date('2022-01-01'), endDate: new Date('2023-01-01'), cost: 2500, renewal: 'anual' },
+  { id: 'sub7', equipmentId: '2', name: 'Norton Antivirus', plan: 'Anual', status: 'inactiva', startDate: new Date('2022-06-01'), endDate: new Date('2023-06-01'), cost: 400, renewal: 'anual' },
+  { id: 'sub8', equipmentId: '12', name: 'Revit Suscripción', plan: 'Anual', status: 'inactiva', startDate: new Date('2023-01-01'), endDate: new Date('2024-01-01'), cost: 800, renewal: 'anual' },
+]
+
 // In-memory storage for new records (development only)
 export let newEquipmentList: any[] = []
 export let newComponentsList: any[] = []
+export let newSoftwareList: any[] = []
+export let newSubscriptionsList: any[] = []
 
 export function addNewEquipment(equipment: any) {
   newEquipmentList.push(equipment)
@@ -277,10 +317,26 @@ export function addNewComponent(component: any) {
   newComponentsList.push(component)
 }
 
+export function addNewSoftware(software: any) {
+  newSoftwareList.push(software)
+}
+
+export function addNewSubscription(subscription: any) {
+  newSubscriptionsList.push(subscription)
+}
+
 export function getNewEquipment() {
   return [...newEquipmentList]
 }
 
 export function getNewComponents() {
   return [...newComponentsList]
+}
+
+export function getNewSoftware() {
+  return [...newSoftwareList]
+}
+
+export function getNewSubscriptions() {
+  return [...newSubscriptionsList]
 }
