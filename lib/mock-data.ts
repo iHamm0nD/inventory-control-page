@@ -265,6 +265,88 @@ export const mockHardwareChanges = [
   { id: 'hw16', equipmentId: '15', changeType: 'reemplazo', oldComponent: 'SSD 256GB', newComponent: 'SSD 512GB', date: new Date('2023-06-01'), cost: 80 },
 ]
 
+// ============= Installed Software Mock Data =============
+export const mockInstalledSoftware = [
+  // PC-LAB-001
+  { id: 'sw1', equipmentId: '1', name: 'Windows 10 Pro', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 300, licensesAvailable: 1, installationDate: new Date('2022-01-15'), status: 'activo' },
+  { id: 'sw2', equipmentId: '1', name: 'Microsoft Office 365', version: 'Latest', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 180, licensesAvailable: 1, expiryDate: new Date('2025-01-15'), status: 'activo' },
+  { id: 'sw3', equipmentId: '1', name: 'Visual Studio Code', version: '1.85.1', vendor: 'Microsoft', licenseType: 'libre', licenseCost: 0, installationDate: new Date('2023-06-10'), status: 'activo' },
+  { id: 'sw4', equipmentId: '1', name: 'VLC Media Player', version: '3.0.20', vendor: 'VideoLAN', licenseType: 'libre', licenseCost: 0, installationDate: new Date('2023-01-20'), status: 'activo' },
+
+  // PC-LAB-002
+  { id: 'sw5', equipmentId: '2', name: 'Windows 10 Pro', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 300, licensesAvailable: 1, installationDate: new Date('2022-01-15'), status: 'activo' },
+  { id: 'sw6', equipmentId: '2', name: 'AutoCAD 2024', version: '2024.0', vendor: 'Autodesk', licenseType: 'educativa', licenseCost: 0, licensesAvailable: 1, installationDate: new Date('2024-01-10'), status: 'activo' },
+  { id: 'sw7', equipmentId: '2', name: 'Adobe Photoshop', version: '2024', vendor: 'Adobe', licenseType: 'propietaria', licenseCost: 600, licensesAvailable: 1, expiryDate: new Date('2025-06-01'), status: 'activo' },
+
+  // PC-LAB-003
+  { id: 'sw8', equipmentId: '3', name: 'Windows 10 Home', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 200, licensesAvailable: 1, installationDate: new Date('2023-03-20'), status: 'activo' },
+  { id: 'sw9', equipmentId: '3', name: 'LibreOffice Suite', version: '7.6', vendor: 'The Document Foundation', licenseType: 'libre', licenseCost: 0, installationDate: new Date('2023-04-01'), status: 'activo' },
+
+  // PC-LAB-004
+  { id: 'sw10', equipmentId: '4', name: 'Windows 10 Pro', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 300, licensesAvailable: 1, installationDate: new Date('2022-01-15'), status: 'activo' },
+  { id: 'sw11', equipmentId: '4', name: 'MATLAB R2023b', version: '2023b', vendor: 'MathWorks', licenseType: 'educativa', licenseCost: 0, licensesAvailable: 1, installationDate: new Date('2023-10-01'), status: 'activo' },
+
+  // PC-LAB-005
+  { id: 'sw12', equipmentId: '5', name: 'Windows 10 Pro', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 300, licensesAvailable: 1, installationDate: new Date('2022-01-15'), status: 'activo' },
+  { id: 'sw13', equipmentId: '5', name: 'Blender', version: '4.0', vendor: 'Blender', licenseType: 'libre', licenseCost: 0, installationDate: new Date('2023-12-01'), status: 'activo' },
+
+  // PC-LAB-006
+  { id: 'sw14', equipmentId: '6', name: 'Windows 10 Pro', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 300, licensesAvailable: 1, installationDate: new Date('2022-06-10'), status: 'activo' },
+  { id: 'sw15', equipmentId: '6', name: 'Python 3.11', version: '3.11', vendor: 'Python Software Foundation', licenseType: 'libre', licenseCost: 0, installationDate: new Date('2023-07-15'), status: 'activo' },
+
+  // PC-LAB-007
+  { id: 'sw16', equipmentId: '7', name: 'Windows 10 Pro', version: '21H2', vendor: 'Microsoft', licenseType: 'propietaria', licenseCost: 300, licensesAvailable: 1, installationDate: new Date('2022-06-10'), status: 'activo' },
+]
+
+// ============= Subscriptions Mock Data =============
+export const mockSubscriptions = [
+  { id: 'sub1', name: 'Microsoft 365 Business', provider: 'Microsoft', type: 'software', cost: 1200, billingFrequency: 'anual', startDate: new Date('2024-01-01'), renewalDate: new Date('2025-01-01'), status: 'activa', autoRenewal: true, licenseCount: 50, licenseUsed: 35 },
+  { id: 'sub2', name: 'Adobe Creative Cloud', provider: 'Adobe', type: 'software', cost: 3000, billingFrequency: 'anual', startDate: new Date('2024-02-15'), renewalDate: new Date('2025-02-15'), status: 'activa', autoRenewal: true, licenseCount: 10, licenseUsed: 8 },
+  { id: 'sub3', name: 'Autodesk Fusion 360', provider: 'Autodesk', type: 'software', cost: 680, billingFrequency: 'anual', startDate: new Date('2024-03-01'), renewalDate: new Date('2025-03-01'), status: 'activa', autoRenewal: true, licenseCount: 20, licenseUsed: 15 },
+  { id: 'sub4', name: 'Norton Antivirus', provider: 'Norton', type: 'soporte', cost: 300, billingFrequency: 'anual', startDate: new Date('2024-01-15'), renewalDate: new Date('2025-01-15'), status: 'activa', autoRenewal: true, licenseCount: 50, licenseUsed: 50 },
+  { id: 'sub5', name: 'Google Workspace', provider: 'Google', type: 'servicio', cost: 1500, billingFrequency: 'mensual', startDate: new Date('2024-01-01'), renewalDate: new Date('2026-01-01'), status: 'activa', autoRenewal: true, licenseCount: 100, licenseUsed: 75 },
+  { id: 'sub6', name: 'AWS Educación', provider: 'Amazon', type: 'nube', cost: 500, billingFrequency: 'anual', startDate: new Date('2024-03-10'), renewalDate: new Date('2025-03-10'), status: 'activa', autoRenewal: false, licenseCount: 1, licenseUsed: 1 },
+  { id: 'sub7', name: 'JetBrains All Products', provider: 'JetBrains', type: 'software', cost: 2400, billingFrequency: 'anual', startDate: new Date('2023-06-01'), renewalDate: new Date('2024-06-01'), status: 'inactiva', autoRenewal: false, licenseCount: 20, licenseUsed: 0 },
+]
+
+// ============= Output Peripherals Mock Data =============
+export const mockOutputPeripherals = [
+  // Monitores
+  { id: 'p1', equipmentId: '1', name: 'Monitor Laboratorio A1-001', type: 'monitor', model: 'Dell S2421H', serialNumber: 'DELLS2421001', vendor: 'Dell', resolution: '1920x1200', specs: '24" Full HD, 60Hz', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 300 },
+  { id: 'p2', equipmentId: '2', name: 'Monitor Laboratorio A1-002', type: 'monitor', model: 'Dell S2421H', serialNumber: 'DELLS2421002', vendor: 'Dell', resolution: '1920x1200', specs: '24" Full HD, 60Hz', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2022-01-15'), purchasePrice: 300 },
+  { id: 'p3', equipmentId: '3', name: 'Monitor Laboratorio A1-003', type: 'monitor', model: 'LG 24UP550', serialNumber: 'LG24UP550003', vendor: 'LG', resolution: '3840x2160', specs: '24" 4K Ultra HD, 60Hz', status: 'activo', location: 'Aula A1', purchaseDate: new Date('2023-06-01'), purchasePrice: 450 },
+  
+  // Impresoras
+  { id: 'p4', name: 'Impresora Multifunción Aula A', type: 'impresora', model: 'HP LaserJet Pro M478', serialNumber: 'HPLJ478001', vendor: 'HP', specs: 'A3, Color, 35ppm', status: 'activo', location: 'Aula A2', purchaseDate: new Date('2022-05-20'), purchasePrice: 800 },
+  { id: 'p5', name: 'Impresora Multifunción Aula B', type: 'impresora', model: 'Canon imagePRESS C7570', serialNumber: 'CANC7570001', vendor: 'Canon', specs: 'A3, Color, 70ppm', status: 'activo', location: 'Aula B1', purchaseDate: new Date('2022-08-10'), purchasePrice: 5000 },
+  { id: 'p6', name: 'Impresora B/N Oficina', type: 'impresora', model: 'Brother HL-L8360CDW', serialNumber: 'BROTHL8360001', vendor: 'Brother', specs: 'Monocromática, 33ppm', status: 'inactivo', location: 'Almacén', purchaseDate: new Date('2021-03-15'), purchasePrice: 400 },
+
+  // Proyectores
+  { id: 'p7', name: 'Proyector Aula C1', type: 'proyector', model: 'Epson EB-2250U', serialNumber: 'EPSEB2250001', vendor: 'Epson', specs: '5000 lúmenes, 4K', status: 'activo', location: 'Aula C1', purchaseDate: new Date('2023-02-14'), purchasePrice: 2500 },
+  { id: 'p8', name: 'Proyector Auditorio', type: 'proyector', model: 'Panasonic PT-RZ870', serialNumber: 'PANRZ870001', vendor: 'Panasonic', specs: '8500 lúmenes, Full HD', status: 'activo', location: 'Auditorio', purchaseDate: new Date('2022-11-20'), purchasePrice: 3500 },
+
+  // Parlantes
+  { id: 'p9', name: 'Sistema de Sonido Auditorio', type: 'parlantes', model: 'JBL Professional LSR308', serialNumber: 'JBLLSR308001', vendor: 'JBL', specs: '8" Woofer, 8ohm', status: 'activo', location: 'Auditorio', purchaseDate: new Date('2023-01-10'), purchasePrice: 1200 },
+  { id: 'p10', name: 'Parlantes Laboratorio', type: 'parlantes', model: 'Logitech Z906', serialNumber: 'LOGZ906001', vendor: 'Logitech', specs: '5.1 Surround, 500W', status: 'activo', location: 'Laboratorio D', purchaseDate: new Date('2022-04-05'), purchasePrice: 350 },
+
+  // Ploter
+  { id: 'p11', name: 'Ploter CAD Aula B', type: 'ploter', model: 'Epson SureColor T5270', serialNumber: 'EPST5270001', vendor: 'Epson', specs: '36", 2880 dpi', status: 'activo', location: 'Aula B2', purchaseDate: new Date('2023-05-18'), purchasePrice: 4500 },
+]
+
+// ============= Issues/Reports Mock Data =============
+export const mockIssueReports = [
+  { id: 'ir1', equipmentId: '1', title: 'Pantalla con píxeles defectuosos', description: 'Monitor muestra línea de píxeles muertos en la parte superior', category: 'hardware', priority: 'alta', status: 'resuelto', reportedBy: 'Juan López', assignedTo: 'Técnico A', resolution: 'Reemplazo de monitor', resolution_date: new Date('2024-01-20') },
+  { id: 'ir2', equipmentId: '2', title: 'Software licencia vencida', description: 'Adobe Photoshop muestra mensaje de licencia expirada', category: 'software', priority: 'media', status: 'resuelto', reportedBy: 'María García', assignedTo: 'Admin', resolution: 'Renovación de suscripción', resolution_date: new Date('2024-01-18') },
+  { id: 'ir3', equipmentId: '4', title: 'Conexión a red intermitente', description: 'El PC pierde conexión cada 2-3 horas', category: 'red', priority: 'alta', status: 'en_progreso', reportedBy: 'Carlos Ruiz', assignedTo: 'Técnico B', resolution: null, resolution_date: null },
+  { id: 'ir4', equipmentId: '5', title: 'Rendimiento lento del sistema', description: 'Equipo tarda mucho en cargar programas', category: 'software', priority: 'media', status: 'abierto', reportedBy: 'Ana Martínez', assignedTo: null, resolution: null, resolution_date: null },
+  { id: 'ir5', equipmentId: '7', title: 'Fallo en el ventilador', description: 'Ventilador de CPU emite ruido anormal', category: 'hardware', priority: 'alta', status: 'abierto', reportedBy: 'Luis Fernández', assignedTo: null, resolution: null, resolution_date: null },
+  { id: 'ir6', equipmentId: '8', title: 'Impresora no detectada', description: 'El equipo no detecta la impresora de red', category: 'perimetral', priority: 'media', status: 'en_progreso', reportedBy: 'Sofía Díaz', assignedTo: 'Técnico A', resolution: null, resolution_date: null },
+  { id: 'ir7', equipmentId: '10', title: 'Driver de USB desactualizado', description: 'USB 3.0 funciona a velocidad 2.0', category: 'software', priority: 'baja', status: 'resuelto', reportedBy: 'Miguel Ángel', assignedTo: 'Técnico C', resolution: 'Actualización de drivers', resolution_date: new Date('2024-01-15') },
+  { id: 'ir8', equipmentId: '12', title: 'Pantalla rota por caída', description: 'Monitor físicamente dañado tras caída accidental', category: 'hardware', priority: 'critica', status: 'resuelto', reportedBy: 'Pedro Sánchez', assignedTo: 'Técnico D', resolution: 'Reemplazo de monitor', resolution_date: new Date('2024-01-10') },
+  { id: 'ir9', equipmentId: '14', title: 'Software pirata detectado', description: 'Sistema detectó software no licenciado', category: 'software', priority: 'critica', status: 'abierto', reportedBy: 'Sistema', assignedTo: 'Admin', resolution: null, resolution_date: null },
+  { id: 'ir10', equipmentId: null, title: 'Necesidad de nuevo PC para laboratorio', description: 'Requerimiento de equipo adicional para expansión de capacidad', category: 'otro', priority: 'media', status: 'abierto', reportedBy: 'Gerencia', assignedTo: null, resolution: null, resolution_date: null },
+]
+
 // In-memory storage for new records (development only)
 export let newEquipmentList: any[] = []
 export let newComponentsList: any[] = []

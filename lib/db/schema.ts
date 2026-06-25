@@ -172,3 +172,117 @@ export const equipmentHistory = pgTable(
     equipmentIdIdx: index('idx_equipment_history_equipmentId').on(table.equipmentId),
   })
 )
+
+// ============= Installed Software Management =============
+export const installedSoftware = pgTable(
+  'installed_software',
+  {
+    id: text('id').primaryKey(),
+    userId: text('userId').notNull(),
+    equipmentId: text('equipmentId')
+      .notNull()
+      .references(() => equipment.id, { onDelete: 'cascade' }),
+    name: text('name').notNull(),
+    version: text('version'),
+    vendor: text('vendor'),
+    licenseType: text('licenseType').notNull(), // 'propietaria', 'libre', 'educativa', 'trial'
+    licenseCost: decimal('licenseCost', { precision: 10, scale: 2 }),
+    licensesAvailable: bigint('licensesAvailable', { mode: 'number' }),
+    installationDate: timestamp('installationDate'),
+    expiryDate: timestamp('expiryDate'),
+    status: text('status').notNull().default('activo'), // activo, inactivo, vencido
+    notes: text('notes'),
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index('idx_software_userId').on(table.userId),
+    equipmentIdIdx: index('idx_software_equipmentId').on(table.equipmentId),
+    statusIdx: index('idx_software_status').on(table.status),
+  })
+)
+
+// ============= Subscriptions Management =============
+export const subscription = pgTable(
+  'subscription',
+  {
+    id: text('id').primaryKey(),
+    userId: text('userId').notNull(),
+    name: text('name').notNull(),
+    provider: text('provider'),
+    type: text('type').notNull(), // 'software', 'servicio', 'soporte', 'nube'
+    cost: decimal('cost', { precision: 10, scale: 2 }).notNull(),
+    billingFrequency: text('billingFrequency').notNull(), // 'anual', 'mensual', 'trimestral'
+    startDate: timestamp('startDate').notNull(),
+    renewalDate: timestamp('renewalDate').notNull(),
+    status: text('status').notNull().default('activa'), // activa, inactiva, vencida, cancelada
+    autoRenewal: boolean('autoRenewal').default(true),
+    licenseCount: bigint('licenseCount', { mode: 'number' }),
+    licenseUsed: bigint('licenseUsed', { mode: 'number' }).default(0),
+    notes: text('notes'),
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index('idx_subscription_userId').on(table.userId),
+    statusIdx: index('idx_subscription_status').on(table.status),
+    renewalDateIdx: index('idx_subscription_renewalDate').on(table.renewalDate),
+  })
+)
+
+// ============= Output Peripherals Management =============
+export const outputPeripheral = pgTable(
+  'output_peripheral',
+  {
+    id: text('id').primaryKey(),
+    userId: text('userId').notNull(),
+    equipmentId: text('equipmentId').references(() => equipment.id, { onDelete: 'set null' }),
+    name: text('name').notNull(),
+    type: text('type').notNull(), // 'monitor', 'impresora', 'parlantes', 'proyector', 'ploter', 'otro'
+    model: text('model'),
+    serialNumber: text('serialNumber').unique(),
+    vendor: text('vendor'),
+    resolution: text('resolution'), // Para monitores (e.g., 1920x1080)
+    specs: text('specs'), // Especificaciones adicionales
+    status: text('status').notNull().default('activo'), // activo, inactivo, dañado, retirado
+    location: text('location'),
+    purchaseDate: timestamp('purchaseDate'),
+    purchasePrice: decimal('purchasePrice', { precision: 10, scale: 2 }),
+    lastMaintenanceDate: timestamp('lastMaintenanceDate'),
+    notes: text('notes'),
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index('idx_peripheral_userId').on(table.userId),
+    equipmentIdIdx: index('idx_peripheral_equipmentId').on(table.equipmentId),
+    statusIdx: index('idx_peripheral_status').on(table.status),
+  })
+)
+
+// ============= Issues/Reports Management =============
+export const issueReport = pgTable(
+  'issue_report',
+  {
+    id: text('id').primaryKey(),
+    userId: text('userId').notNull(),
+    equipmentId: text('equipmentId').references(() => equipment.id, { onDelete: 'set null' }),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    category: text('category').notNull(), // 'hardware', 'software', 'red', 'perimetral', 'otro'
+    priority: text('priority').notNull().default('media'), // 'baja', 'media', 'alta', 'critica'
+    status: text('status').notNull().default('abierto'), // 'abierto', 'en_progreso', 'resuelto', 'cerrado'
+    reportedBy: text('reportedBy'),
+    assignedTo: text('assignedTo'),
+    resolution: text('resolution'),
+    resolution_date: timestamp('resolution_date'),
+    createdAt: timestamp('createdAt').notNull().defaultNow(),
+    updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+  },
+  (table) => ({
+    userIdIdx: index('idx_report_userId').on(table.userId),
+    equipmentIdIdx: index('idx_report_equipmentId').on(table.equipmentId),
+    statusIdx: index('idx_report_status').on(table.status),
+    priorityIdx: index('idx_report_priority').on(table.priority),
+  })
+)

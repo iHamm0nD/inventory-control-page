@@ -86,26 +86,54 @@ export default async function DashboardPage() {
         {/* Quick Actions */}
         <div className="bg-card border border-border rounded-lg p-8 mb-12">
           <h2 className="text-xl font-semibold text-foreground mb-6">Acciones Rápidas</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Link href="/dashboard/equipment">
               <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
-                <div className="text-2xl mb-3">📊</div>
+                <div className="text-2xl mb-3">🖥️</div>
                 <h3 className="font-semibold text-foreground mb-1">Equipos</h3>
-                <p className="text-sm text-muted-foreground">Gestiona todos los equipos del laboratorio</p>
+                <p className="text-sm text-muted-foreground">Gestiona todos los equipos</p>
+              </div>
+            </Link>
+            <Link href="/dashboard/software">
+              <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
+                <div className="text-2xl mb-3">💾</div>
+                <h3 className="font-semibold text-foreground mb-1">Software</h3>
+                <p className="text-sm text-muted-foreground">Gestiona software instalado</p>
+              </div>
+            </Link>
+            <Link href="/dashboard/subscriptions">
+              <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
+                <div className="text-2xl mb-3">📋</div>
+                <h3 className="font-semibold text-foreground mb-1">Suscripciones</h3>
+                <p className="text-sm text-muted-foreground">Administra suscripciones</p>
+              </div>
+            </Link>
+            <Link href="/dashboard/peripherals">
+              <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
+                <div className="text-2xl mb-3">🖨️</div>
+                <h3 className="font-semibold text-foreground mb-1">Periféricos</h3>
+                <p className="text-sm text-muted-foreground">Gestiona periféricos</p>
               </div>
             </Link>
             <Link href="/dashboard/maintenance">
               <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
                 <div className="text-2xl mb-3">🔧</div>
                 <h3 className="font-semibold text-foreground mb-1">Mantenimiento</h3>
-                <p className="text-sm text-muted-foreground">Registra mantenimientos y cambios de hardware</p>
+                <p className="text-sm text-muted-foreground">Registra mantenimientos</p>
+              </div>
+            </Link>
+            <Link href="/dashboard/issues">
+              <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
+                <div className="text-2xl mb-3">⚠️</div>
+                <h3 className="font-semibold text-foreground mb-1">Incidencias</h3>
+                <p className="text-sm text-muted-foreground">Reporta problemas</p>
               </div>
             </Link>
             <Link href="/dashboard/reports">
               <div className="p-6 rounded-lg border border-border hover:border-primary bg-muted/30 hover:bg-muted/50 transition-all cursor-pointer">
                 <div className="text-2xl mb-3">📈</div>
                 <h3 className="font-semibold text-foreground mb-1">Reportes</h3>
-                <p className="text-sm text-muted-foreground">Analiza costos, upgrades y historial</p>
+                <p className="text-sm text-muted-foreground">Analiza reportes</p>
               </div>
             </Link>
           </div>
@@ -118,36 +146,54 @@ export default async function DashboardPage() {
             <div className="flex gap-4">
               <div className="text-2xl flex-shrink-0">✓</div>
               <div>
-                <h3 className="font-semibold text-foreground">Gestión Completa</h3>
+                <h3 className="font-semibold text-foreground">Gestión de Equipos</h3>
                 <p className="text-sm text-muted-foreground">
-                  Registra equipos, componentes y su historial de cambios
+                  Registro completo de computadoras y componentes
                 </p>
               </div>
             </div>
             <div className="flex gap-4">
               <div className="text-2xl flex-shrink-0">✓</div>
               <div>
-                <h3 className="font-semibold text-foreground">Mantenimiento Detallado</h3>
+                <h3 className="font-semibold text-foreground">Software & Licencias</h3>
                 <p className="text-sm text-muted-foreground">
-                  Registra mantenimientos preventivos y correctivos
+                  Gestión de software instalado y tipos de licencias
                 </p>
               </div>
             </div>
             <div className="flex gap-4">
               <div className="text-2xl flex-shrink-0">✓</div>
               <div>
-                <h3 className="font-semibold text-foreground">Tracking de Hardware</h3>
+                <h3 className="font-semibold text-foreground">Suscripciones</h3>
                 <p className="text-sm text-muted-foreground">
-                  Registra cambios de componentes y repotenciaciones
+                  Control de suscripciones activas y renovaciones
                 </p>
               </div>
             </div>
             <div className="flex gap-4">
               <div className="text-2xl flex-shrink-0">✓</div>
               <div>
-                <h3 className="font-semibold text-foreground">Reportes Analíticos</h3>
+                <h3 className="font-semibold text-foreground">Periféricos de Salida</h3>
                 <p className="text-sm text-muted-foreground">
-                  Análisis de costos, upgrades y ciclo de vida
+                  Administración de monitores, impresoras y proyectores
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="text-2xl flex-shrink-0">✓</div>
+              <div>
+                <h3 className="font-semibold text-foreground">Mantenimiento</h3>
+                <p className="text-sm text-muted-foreground">
+                  Registro de mantenimientos preventivos y correctivos
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="text-2xl flex-shrink-0">✓</div>
+              <div>
+                <h3 className="font-semibold text-foreground">Reportes e Incidencias</h3>
+                <p className="text-sm text-muted-foreground">
+                  Sistema de reportes de problemas y análisis integral
                 </p>
               </div>
             </div>

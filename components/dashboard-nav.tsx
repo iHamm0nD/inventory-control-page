@@ -22,7 +22,11 @@ export function DashboardNav() {
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: '📊' },
     { href: '/dashboard/equipment', label: 'Equipos', icon: '🖥️' },
+    { href: '/dashboard/software', label: 'Software', icon: '💾' },
+    { href: '/dashboard/subscriptions', label: 'Suscripciones', icon: '📋' },
+    { href: '/dashboard/peripherals', label: 'Periféricos', icon: '🖨️' },
     { href: '/dashboard/maintenance', label: 'Mantenimiento', icon: '🔧' },
+    { href: '/dashboard/issues', label: 'Incidencias', icon: '⚠️' },
     { href: '/dashboard/reports', label: 'Reportes', icon: '📈' },
   ]
 
